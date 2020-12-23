@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -16,28 +16,40 @@ const useStyles = makeStyles({
   media: {
     height: 570,
   },
+  darkTheme: {
+      backgroundColor: '#333',
+      color: '#fff'
+  }
 });
 
 export default function MediaCard({book, removeBook}) {
   const classes = useStyles();
+  const [isDarkTheme, setIsDarkTheme] = useState(false)
+
+  const toggleDarkTheme = () => {
+      setIsDarkTheme(!isDarkTheme)
+  }
 
   return (
     <Grid item>
         <Card m={5} md={4} sm={6} xs={12} className={classes.root}>
-          <CardActionArea>
+          <CardActionArea onClick={toggleDarkTheme}>
             <CardMedia
               className={classes.media}
               image={book.image}
               title="Contemplative Reptile"
             />
-            <CardContent>
+            <CardContent className={isDarkTheme ? classes.darkTheme : ''}>
               <Typography gutterBottom variant="h5" component="h2">
                 {book.title}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                across all continents except Antarctica
+              <Typography variant="h6">
+                  {book.author}
               </Typography>
+              <Typography className={isDarkTheme ? classes.darkTheme : ''} variant="body2" color="textSecondary" component="p">
+                {book.desc}
+              </Typography>
+              
             </CardContent>
           </CardActionArea>
           <CardActions>
