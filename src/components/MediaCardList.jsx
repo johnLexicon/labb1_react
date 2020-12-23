@@ -4,7 +4,7 @@ import MediaCard from './MediaCard';
 
 export const MediaCardList = ({books, removeBook}) => {
     return (
-        <Grid container justify="flex-start" spacing={2}>
+        <Grid container justify="space-around" spacing={2}>
             {books.map(book => <MediaCard key={book.id} book={book} removeBook={removeBook} />)}
         </Grid>
     )
