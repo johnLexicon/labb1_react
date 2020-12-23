@@ -1,4 +1,5 @@
 import React, {useRef} from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import {
   FormControl,
   InputLabel,
@@ -8,7 +9,15 @@ import {
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 
+const useStyles = makeStyles({
+  my: {
+    marginBottom: '2rem',
+    marginTop: '2rem'
+  }
+})
+
 export const Login = ({login}) => {
+  const classes = useStyles();
   const emailContainer = useRef(null)
   return (
     <div>
@@ -19,7 +28,6 @@ export const Login = ({login}) => {
           id="email"
           type="email"
           placeholder="email"
-          required="true"
           startAdornment={
             <InputAdornment position="start">
               <AccountCircle />
@@ -28,7 +36,7 @@ export const Login = ({login}) => {
         />
       </FormControl>
       <div>
-          <Button onClick={() => {login(emailContainer.current.value)}} mt={1} size="large" variant="contained" color="primary">Log In</Button>
+          <Button className={classes.my} onClick={(e) => {e.preventDefault(); login(emailContainer.current.value)}} mt={1} size="large" variant="contained" color="primary">Log In</Button>
       </div>
     </div>
   );
