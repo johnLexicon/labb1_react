@@ -1,24 +1,40 @@
-import React, {useRef} from "react";
+import React, { useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 import {
   FormControl,
   InputLabel,
   Input,
   InputAdornment,
-  Button
-} from "@material-ui/core";
-import { AccountCircle } from "@material-ui/icons";
+  Button,
+  Snackbar
+} from '@material-ui/core';
+import { AccountCircle } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   my: {
     marginBottom: '2rem',
     marginTop: '2rem'
   }
-})
+});
 
-export const Login = ({login}) => {
+export const Login = ({ login, error }) => {
   const classes = useStyles();
-  const emailContainer = useRef(null)
+  const emailContainer = useRef(null);
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (event, reason) => {
+    console.log(reason);
+    setOpen(false);
+  };
+
+  const handleLogin = (email) => {
+    const isValid = login(email);
+    if (!isValid) {
+      setOpen(true);
+    }
+  };
+
   return (
     <div>
       <FormControl>
@@ -36,7 +52,24 @@ export const Login = ({login}) => {
         />
       </FormControl>
       <div>
-          <Button className={classes.my} onClick={(e) => {e.preventDefault(); login(emailContainer.current.value)}} mt={1} size="large" variant="contained" color="primary">Log In</Button>
+        <Button
+          className={classes.my}
+          onClick={(e) => {
+            e.preventDefault();
+            handleLogin(emailContainer.current.value);
+          }}
+          mt={1}
+          size="large"
+          variant="contained"
+          color="primary"
+        >
+          Log In
+        </Button>
+        <Snackbar open={open} onClose={handleClose} autoHideDuration={4000}>
+          <Alert severity="error" sx={{ width: '100%' }}>
+            User not found!
+          </Alert>
+        </Snackbar>
       </div>
     </div>
   );
