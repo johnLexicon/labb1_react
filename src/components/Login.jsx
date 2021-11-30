@@ -23,13 +23,14 @@ export const Login = ({ login, error }) => {
   const emailContainer = useRef(null);
   const [open, setOpen] = useState(false);
 
-  const handleClose = (event, reason) => {
-    console.log(reason);
+  // Invoked when Snackbar autoHideDuration time is met
+  const handleClose = () => {
     setOpen(false);
   };
 
   const handleLogin = (email) => {
     const isValid = login(email);
+    //Show Snackbar with error Alert
     if (!isValid) {
       setOpen(true);
     }
